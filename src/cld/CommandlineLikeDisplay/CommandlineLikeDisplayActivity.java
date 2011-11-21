@@ -7,6 +7,7 @@ import android.os.Message;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 public class CommandlineLikeDisplayActivity extends Activity {
@@ -14,6 +15,7 @@ public class CommandlineLikeDisplayActivity extends Activity {
 		private ArrayAdapter <String> mMessageArray;
 		private ListView mMessageView;
 		private ExampleService myService;
+        private EditText txtInput;
 		
 	    /** Called when the activity is first created. */
 	    @Override
@@ -28,6 +30,7 @@ public class CommandlineLikeDisplayActivity extends Activity {
 	    	mMessageArray = new ArrayAdapter<String>(this, R.layout.message);
 	    	mMessageView = (ListView) findViewById(R.id.ListMessages);
 	    	mMessageView.setAdapter(mMessageArray);
+	    	txtInput = (EditText)findViewById(R.id.txtInput);
 	    	
 	    	myService = new ExampleService(mHandler, 10);
 	    	
@@ -45,6 +48,15 @@ public class CommandlineLikeDisplayActivity extends Activity {
 	            public void onClick(View v) {
 	                myService.testFunction();
 	            }
+	        });
+	        
+	        final Button buttonGo = (Button) findViewById(R.id.btnGo);
+	        buttonGo.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					myService.stringToInt(txtInput.getText().toString());
+					txtInput.clearComposingText();
+					
+				}
 	        });
 	    }
 	    
