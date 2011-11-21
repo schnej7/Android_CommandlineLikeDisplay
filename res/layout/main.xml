@@ -5,12 +5,15 @@
     android:layout_height="fill_parent"
     android:weightSum="1">
     <ListView android:id="@+id/ListMessages" android:layout_width="fill_parent" android:layout_height="302dp" android:layout_weight="0.93"></ListView>
-    <Button android:layout_height="wrap_content" android:text="Clear" android:id="@+id/btnClear" android:layout_width="fill_parent"></Button>
-    <Button android:layout_height="wrap_content" android:text="Start" android:id="@+id/btnStart" android:layout_width="fill_parent"></Button>
+    <LinearLayout android:layout_width="fill_parent" android:id="@+id/linearLayout2" android:layout_height="wrap_content" android:weightSum="1">
+        <Button android:text="Start" android:layout_height="wrap_content" android:id="@+id/btnStart" android:layout_width="149dp" android:layout_weight="0.85"></Button>
+        <Button android:layout_width="161dp" android:text="CLS" android:layout_height="wrap_content" android:id="@+id/btnCls"></Button>
+    </LinearLayout>
     <LinearLayout android:layout_width="fill_parent" android:id="@+id/linearLayout1" android:layout_height="49dp">
-        <EditText android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/txtInput" android:layout_weight="0.49">
+        <EditText android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/txtInput" android:layout_weight="0.43">
             <requestFocus></requestFocus>
         </EditText>
-        <Button android:text="GO" android:layout_height="wrap_content" android:id="@+id/btnGo" android:layout_width="wrap_content" android:layout_weight="0.03"></Button>
+        <Button android:text="GO" android:layout_height="wrap_content" android:id="@+id/btnGo" android:layout_width="wrap_content"></Button>
+        <Button android:text="CLR" android:layout_height="wrap_content" android:id="@+id/btnClr" android:layout_width="wrap_content"></Button>
     </LinearLayout>
 </LinearLayout>

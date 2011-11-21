@@ -35,8 +35,8 @@ public class CommandlineLikeDisplayActivity extends Activity {
 	    	myService = new ExampleService(mHandler, 10);
 	    	
 	        //button listener
-	        final Button buttonClear = (Button) findViewById(R.id.btnClear);
-	        buttonClear.setOnClickListener(new View.OnClickListener() {
+	        final Button buttonCls = (Button) findViewById(R.id.btnCls);
+	        buttonCls.setOnClickListener(new View.OnClickListener() {
 	            public void onClick(View v) {
 	                clearDisplay();
 	            }
@@ -53,9 +53,14 @@ public class CommandlineLikeDisplayActivity extends Activity {
 	        final Button buttonGo = (Button) findViewById(R.id.btnGo);
 	        buttonGo.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					myService.stringToInt(txtInput.getText().toString());
-					txtInput.clearComposingText();
-					
+					myService.stringToInt(txtInput.getText().toString());					
+				}
+	        });
+	        
+	        final Button buttonClr = (Button) findViewById(R.id.btnClr);
+	        buttonClr.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					txtInput.setText("");
 				}
 	        });
 	    }
