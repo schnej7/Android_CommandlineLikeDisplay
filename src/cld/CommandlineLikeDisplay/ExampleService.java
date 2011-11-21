@@ -16,16 +16,15 @@ public class ExampleService {
 	//start the example service
 	public void testFunction(){
 		for(int i = 0; i < my_count_to; i++){
-			
 			print_debug("Hello " + i);
-			
+			print_normal("Hello " + i);
 		}
 	}
 	
 	//Print a debug message
 	public void print_debug(String outString) {
-		byte[] buffer = new byte[1024];
-		buffer = outString.getBytes();
+		String debugString = "(Debug) " + outString;
+		byte[] buffer = debugString.getBytes();
 
 		myHandler.obtainMessage(Constants.MSG_DEBUG, buffer.length, -1, buffer)
 				.sendToTarget();
@@ -33,8 +32,7 @@ public class ExampleService {
 
 	//Print a normal message
 	public void print_normal(String outString) {
-		byte[] buffer = new byte[1024];
-		buffer = outString.getBytes();
+		byte[] buffer = outString.getBytes();
 
 		myHandler.obtainMessage(Constants.MSG_NORMAL, buffer.length, -1, buffer)
 				.sendToTarget();
