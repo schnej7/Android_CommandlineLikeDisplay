@@ -13,6 +13,39 @@ public class ExampleService {
 		myHandler = a_Handler;
 	}
 	
+	public void stringToInt(String inString){
+		if(inString.equals("one")){
+			print_normal("1");
+		}
+		else if(inString.equals("two")){
+			print_normal("2");
+		}
+		else if(inString.equals("three")){
+			print_normal("3");
+		}
+		else if(inString.equals("four")){
+			print_normal("4");
+		}
+		else if(inString.equals("five")){
+			print_normal("5");
+		}
+		else if(inString.equals("six")){
+			print_normal("6");
+		}
+		else if(inString.equals("seven")){
+			print_normal("7");
+		}
+		else if(inString.equals("eight")){
+			print_normal("8");
+		}
+		else if(inString.equals("nine")){
+			print_normal("9");
+		}
+		else{
+			print_normal(inString);
+		}
+	}
+	
 	//start the example service
 	public void testFunction(){
 		for(int i = 0; i < my_count_to; i++){
