@@ -4,7 +4,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:weightSum="1">
-    <ListView android:id="@+id/ListMessages" android:layout_width="fill_parent" android:layout_height="388dp"></ListView>
+    <ListView android:id="@+id/ListMessages" android:layout_width="fill_parent" android:layout_height="302dp" android:layout_weight="0.93"></ListView>
     <Button android:layout_height="wrap_content" android:text="Clear" android:id="@+id/btnClear" android:layout_width="fill_parent"></Button>
     <Button android:layout_height="wrap_content" android:text="Start" android:id="@+id/btnStart" android:layout_width="fill_parent"></Button>
+    <LinearLayout android:layout_width="fill_parent" android:id="@+id/linearLayout1" android:layout_height="49dp">
+        <EditText android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/txtInput" android:layout_weight="0.49">
+            <requestFocus></requestFocus>
+        </EditText>
+        <Button android:text="GO" android:layout_height="wrap_content" android:id="@+id/btnGo" android:layout_width="wrap_content" android:layout_weight="0.03"></Button>
+    </LinearLayout>
 </LinearLayout>
