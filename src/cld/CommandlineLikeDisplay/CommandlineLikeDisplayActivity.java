@@ -11,6 +11,8 @@ import android.widget.ListView;
 
 public class CommandlineLikeDisplayActivity extends Activity {
 	
+	//test
+	
 		private ArrayAdapter <String> mMessageArray;
 		private ListView mMessageView;
 		private ExampleService myService;
