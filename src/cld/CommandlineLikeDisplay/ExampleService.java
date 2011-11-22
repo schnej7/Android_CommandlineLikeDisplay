@@ -22,7 +22,7 @@ public class ExampleService {
 	//////////////////////////////////////////////////////////
 	//Example Functions
 	//////////////////////////////////////////////////////////
-	public void stringToInt(String inString){
+	public void example(String inString){
 		myCLDMessage.print_normal("You typed: " + inString);
 	}
 	

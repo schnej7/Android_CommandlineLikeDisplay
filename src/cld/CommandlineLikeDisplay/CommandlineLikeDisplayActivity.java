@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -68,17 +69,23 @@ public class CommandlineLikeDisplayActivity extends Activity {
 	        final Button buttonGo = (Button) findViewById(R.id.btnGo);
 	        buttonGo.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					String input = txtInput.getText().toString();
-					///////////////////////////////////////////////
-					//TODO
-					//
-					//Here you can set the go button to call a function
-					//in your class with the parameter input which is
-					//a string containing the data from the textual input
-					///////////////////////////////////////////////
-					myService.stringToInt(input);					
+					getText();
 				}
 	        });
+	        
+	        txtInput.setOnKeyListener(new View.OnKeyListener() {
+				
+				@Override
+				public boolean onKey(View v, int keyCode, KeyEvent event) {	
+					if( keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN){
+						getText();
+						return true;
+					}
+					else{
+						return false;
+					}
+				}
+			});
 	        
 	        final Button buttonClr = (Button) findViewById(R.id.btnClr);
 	        buttonClr.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +93,18 @@ public class CommandlineLikeDisplayActivity extends Activity {
 					txtInput.setText("");
 				}
 	        });
+	    }
+	    
+	    private void getText(){
+			String input = txtInput.getText().toString();
+			///////////////////////////////////////////////
+			//TODO
+			//
+			//Here you can set the go button to call a function
+			//in your class with the parameter input which is
+			//a string containing the data from the textual input
+			///////////////////////////////////////////////
+			myService.example(input);					
 	    }
 	    
 	    //Used to clear the display
