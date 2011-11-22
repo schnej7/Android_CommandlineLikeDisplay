@@ -105,12 +105,14 @@ public class CommandlineLikeDisplayActivity extends Activity {
 			    		writeBuf = (byte[]) msg.obj;
 			    		messageString = new String(writeBuf);
 			    		mMessageArray.add(messageString);
+			    		mMessageView.setSelection(mMessageView.getCount() - 1);
 		    		}
 		    		break;
 		    	case Constants.MSG_NORMAL:
 		    		writeBuf = (byte[]) msg.obj;
 		    		messageString = new String(writeBuf);
 		    		mMessageArray.add(messageString);
+		    		mMessageView.setSelection(mMessageView.getCount() - 1);
 		    		break;
 		    	}
 	    	}
