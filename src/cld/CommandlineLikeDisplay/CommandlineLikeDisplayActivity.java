@@ -86,7 +86,7 @@ public class CommandlineLikeDisplayActivity extends Activity {
 	    private void getText(){
 	    	myCLDMessage.getLineFromInput(txtInput.getText().toString());
 	    }
-	    
+	   
 	    //Used to clear the display
 	    private void clearDisplay(){
 	    	mMessageArray.clear();
@@ -120,7 +120,6 @@ public class CommandlineLikeDisplayActivity extends Activity {
 	    private class backendThread extends Thread{
 	    
 	    	public void run(){
-	    		ExampleService myService;
 	    		///////////////////////////////////////////////
 	    		//TODO
 	    		//
@@ -129,7 +128,7 @@ public class CommandlineLikeDisplayActivity extends Activity {
 		    	//that in your class you can create a CLDMessage object
 		    	//used for sending data to the UI
 	    		///////////////////////////////////////////////
-		    	myService = new ExampleService(myCLDMessage);
+	    		 ExampleService myService = new ExampleService(myCLDMessage);
         		///////////////////////////////////////////////
         		//TODO
         		//
