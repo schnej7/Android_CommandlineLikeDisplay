@@ -15,8 +15,9 @@ public class CommandlineLikeDisplayActivity extends Activity {
 	
 		private ArrayAdapter <String> mMessageArray;
 		private ListView mMessageView;
-		private ExampleService myService;
         private EditText txtInput;
+        private CLDMessage myCLDMessage;
+        private backendThread myBackendThread;
 		
 	    /** Called when the activity is first created. */
 	    @Override
@@ -33,16 +34,7 @@ public class CommandlineLikeDisplayActivity extends Activity {
 	    	mMessageView = (ListView) findViewById(R.id.ListMessages);
 	    	mMessageView.setAdapter(mMessageArray);
 	    	txtInput = (EditText)findViewById(R.id.txtInput);
-	    	
-    		///////////////////////////////////////////////
-    		//TODO
-    		//
-    		//Here you call the constructor or a setup function for
-	    	//your class, it is important to pass in mHandler so
-	    	//that in your class you can create a CLDMessage object
-	    	//used for sending data to the UI
-    		///////////////////////////////////////////////
-	    	myService = new ExampleService(mHandler, 10);
+	    	myCLDMessage = new CLDMessage(mHandler);
 	    	
 	        //button listener
 	        final Button buttonCls = (Button) findViewById(R.id.btnCls);
@@ -56,13 +48,9 @@ public class CommandlineLikeDisplayActivity extends Activity {
 	        final Button buttonStart = (Button) findViewById(R.id.btnStart);
 	        buttonStart.setOnClickListener(new View.OnClickListener() {
 	            public void onClick(View v) {
-	        		///////////////////////////////////////////////
-	        		//TODO
-	        		//
-	        		//Here you can set the start button to 
-	            	//call a function in your class 	
-	        		///////////////////////////////////////////////
-	                myService.testFunction();
+	            	myCLDMessage.clearQueue();
+	    	    	myBackendThread = new backendThread();
+	            	myBackendThread.start();
 	            }
 	        });
 	        
@@ -96,15 +84,7 @@ public class CommandlineLikeDisplayActivity extends Activity {
 	    }
 	    
 	    private void getText(){
-			String input = txtInput.getText().toString();
-			///////////////////////////////////////////////
-			//TODO
-			//
-			//Here you can set the go button to call a function
-			//in your class with the parameter input which is
-			//a string containing the data from the textual input
-			///////////////////////////////////////////////
-			myService.example(input);					
+	    	myCLDMessage.getLineFromInput(txtInput.getText().toString());
 	    }
 	    
 	    //Used to clear the display
@@ -136,4 +116,27 @@ public class CommandlineLikeDisplayActivity extends Activity {
 		    	}
 	    	}
 	    };
+	    
+	    private class backendThread extends Thread{
+	    
+	    	public void run(){
+	    		ExampleService myService;
+	    		///////////////////////////////////////////////
+	    		//TODO
+	    		//
+	    		//Here you call the constructor or a setup function for
+		    	//your class, it is important to pass in mHandler so
+		    	//that in your class you can create a CLDMessage object
+		    	//used for sending data to the UI
+	    		///////////////////////////////////////////////
+		    	myService = new ExampleService(myCLDMessage);
+        		///////////////////////////////////////////////
+        		//TODO
+        		//
+        		//Here you can set the start button to 
+            	//call a function in your class 	
+        		///////////////////////////////////////////////
+                myService.start();
+	    	}
+	    }
 	}

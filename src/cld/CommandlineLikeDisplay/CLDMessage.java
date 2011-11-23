@@ -1,14 +1,45 @@
 package cld.CommandlineLikeDisplay;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import android.os.Handler;
 
 public class CLDMessage {
 	
-	Handler myHandler;
+	private static Handler myHandler;
+	private static Queue <String> input_queue;
 	
 	//Constructor
 	CLDMessage(Handler a_Handler){
 		myHandler = a_Handler;
+		input_queue = new LinkedList <String>();
+	}
+	
+	public synchronized void clearQueue(){
+		input_queue.clear();
+	}
+
+	//Get a line of text from the input
+	public synchronized void getLineFromInput(String input){
+		input_queue.add(input);
+		this.notifyAll();
+	}
+	
+	//Return the next element of the input queue
+	//or wait for user input
+	public String getLine(){
+		while(input_queue.size() == 0){
+			synchronized(this){
+				try {
+					wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return input_queue.remove();
 	}
 	
 	//Print a debug message
