@@ -10,14 +10,28 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import java.util.ArrayList;
 
 public class CommandlineLikeDisplayActivity extends Activity {
 	
 		private ArrayAdapter <String> mMessageArray;
+		private ArrayList<String> consoleText = new ArrayList<String>();
 		private ListView mMessageView;
 		private ExampleService myService;
         private EditText txtInput;
 		
+       @Override 
+        public void onSaveInstanceState(Bundle savedInstanceState){
+        	savedInstanceState.putStringArrayList("ConsoleText", consoleText);
+        } 
+        
+       @Override
+       public void onRestoreInstanceState(Bundle savedInstanceState){
+    	   ArrayList <String> newConsole = savedInstanceState.getStringArrayList("ConsoleText");
+    	   for(int i=0; i<newConsole.size(); i++){
+    		   mMessageArray.add(newConsole.get(i));
+    	   }
+       }
 	    /** Called when the activity is first created. */
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +44,10 @@ public class CommandlineLikeDisplayActivity extends Activity {
 	    private void setup(){
 	    	//Sets up the UI
 	    	mMessageArray = new ArrayAdapter<String>(this, R.layout.message);
+	    	//grabs the old console text from the savedInstanceState of consoleText
+	    	for(int i=0; i<consoleText.size(); ++i){
+	    		mMessageArray.add(consoleText.get(i));
+	    	}
 	    	mMessageView = (ListView) findViewById(R.id.ListMessages);
 	    	mMessageView.setAdapter(mMessageArray);
 	    	txtInput = (EditText)findViewById(R.id.txtInput);
@@ -104,12 +122,14 @@ public class CommandlineLikeDisplayActivity extends Activity {
 			//in your class with the parameter input which is
 			//a string containing the data from the textual input
 			///////////////////////////////////////////////
-			myService.example(input);					
+			myService.example(input);
+			// txtInput.setText("");  //clears input after hitting go / enter
 	    }
 	    
 	    //Used to clear the display
 	    private void clearDisplay(){
 	    	mMessageArray.clear();
+	    	consoleText.clear();
 	    }
 	    
 	    //Handler used for receiving messages from the service
@@ -123,6 +143,7 @@ public class CommandlineLikeDisplayActivity extends Activity {
 		    		if(Constants.DEBUG){
 			    		writeBuf = (byte[]) msg.obj;
 			    		messageString = new String(writeBuf);
+			    		consoleText.add(messageString);
 			    		mMessageArray.add(messageString);
 			    		mMessageView.setSelection(mMessageView.getCount() - 1);
 		    		}
@@ -130,6 +151,7 @@ public class CommandlineLikeDisplayActivity extends Activity {
 		    	case Constants.MSG_NORMAL:
 		    		writeBuf = (byte[]) msg.obj;
 		    		messageString = new String(writeBuf);
+		    		consoleText.add(messageString);
 		    		mMessageArray.add(messageString);
 		    		mMessageView.setSelection(mMessageView.getCount() - 1);
 		    		break;
