@@ -24,6 +24,23 @@ public class ExampleService {
 	//////////////////////////////////////////////////////////
 	//Example Functions
 	//////////////////////////////////////////////////////////
+	//Example that using CLDMessage is thread safe :)
+	/*
+	public void start(){
+		myCLDMessage.print_normal("Starting testThread!");
+		testThread a_testThread = new testThread();
+		a_testThread.start();
+		myCLDMessage.print_normal("It's thread safe!");
+	}
+	
+	class testThread extends Thread{
+		public void run(){
+			myCLDMessage.print_normal("What is your name?");
+			String in = myCLDMessage.getLine();
+			myCLDMessage.print_normal("Your name is " + in);
+		}
+	}
+	*/
 	
 	public void start(){
 		myCLDMessage.print_normal("Guessing game 0 - 100");
@@ -44,6 +61,7 @@ public class ExampleService {
 		}
 		myCLDMessage.print_normal("You Win!");
 	}
+	
 	//////////////////////////////////////////////////////////
 
 }
