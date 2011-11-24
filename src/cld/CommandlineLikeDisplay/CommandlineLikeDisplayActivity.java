@@ -19,18 +19,23 @@ public class CommandlineLikeDisplayActivity extends Activity {
 		private ListView mMessageView;
 		private ExampleService myService;
         private EditText txtInput;
-		
        @Override 
         public void onSaveInstanceState(Bundle savedInstanceState){
         	savedInstanceState.putStringArrayList("ConsoleText", consoleText);
+        	savedInstanceState.putString("EditBox",txtInput.getText().toString());
         } 
         
        @Override
        public void onRestoreInstanceState(Bundle savedInstanceState){
+    	   //restore saved settings (console text and input box text)
+    	   txtInput.setText(savedInstanceState.getString("EditBox"));
     	   ArrayList <String> newConsole = savedInstanceState.getStringArrayList("ConsoleText");
+    	   //restore messageArray's contents
     	   for(int i=0; i<newConsole.size(); i++){
     		   mMessageArray.add(newConsole.get(i));
     	   }
+    	   //restore consoleText's contents
+    	   consoleText=newConsole;
        }
 	    /** Called when the activity is first created. */
 	    @Override
