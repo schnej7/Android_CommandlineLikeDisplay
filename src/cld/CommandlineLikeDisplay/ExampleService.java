@@ -57,7 +57,7 @@ public class ExampleService {
 			}
 			user_input = Integer.valueOf(inString).intValue();
 			if(user_input > rand) myCLDMessage.print_normal("Too High!");
-			else myCLDMessage.print_normal("Too Low!");
+			else if (user_input < rand) myCLDMessage.print_normal("Too Low!");
 		}
 		myCLDMessage.print_normal("You Win!");
 	}
