@@ -1,10 +1,11 @@
 package cld.CommandlineLikeDisplay;
 
-import java.util.Random;
+import blue.mesh.BlueMeshService;
 
 public class ExampleService {
 	
 	private CLDMessage myCLDMessage;
+	private BlueMeshService bms;
 	
 	//example service constructor
 	public ExampleService( CLDMessage a_CLDMessage ){
@@ -15,10 +16,6 @@ public class ExampleService {
 		//which will be your object for io
 		///////////////////////////////////////////////	
 		myCLDMessage = a_CLDMessage;
-	}
-	
-	private boolean isNumber(String input){
-		return ( input.matches("[0-9]+") );
 	}
 	
 	//////////////////////////////////////////////////////////
@@ -43,23 +40,21 @@ public class ExampleService {
 	*/
 	
 	public void start(){
-		myCLDMessage.print_normal("Guessing game 0 - 100");
-		int user_input = -1;
-		Random a_random= new Random();
-		int rand = a_random.nextInt(100);
-		while (user_input != rand){
-			myCLDMessage.print_normal("Guess a number:");
-			String inString = myCLDMessage.getLine();
-			myCLDMessage.print_normal(inString);
-			if(!isNumber(inString)){
-				myCLDMessage.print_normal("Please enter a number");
-				continue;
+		myCLDMessage.print_normal("one");
+		bms = new BlueMeshService();
+		myCLDMessage.print_normal("two");
+		bms.launch();
+		myCLDMessage.print_normal("three");
+		while( true ){
+			bms.write(myCLDMessage.getLine().getBytes());
+			byte bytes[] = bms.pull();
+			if( bytes == null){
+				myCLDMessage.print_normal("<NOTHING>");
 			}
-			user_input = Integer.valueOf(inString).intValue();
-			if(user_input > rand) myCLDMessage.print_normal("Too High!");
-			else if (user_input < rand) myCLDMessage.print_normal("Too Low!");
+			else{
+				myCLDMessage.print_normal(bytes.toString());
+			}
 		}
-		myCLDMessage.print_normal("You Win!");
 	}
 	
 	//////////////////////////////////////////////////////////
