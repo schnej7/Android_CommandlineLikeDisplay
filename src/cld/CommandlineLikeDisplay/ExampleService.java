@@ -45,16 +45,36 @@ public class ExampleService {
 		myCLDMessage.print_normal("two");
 		bms.launch();
 		myCLDMessage.print_normal("three");
+		readThread reader = new readThread();
+		reader.start();
 		while( true ){
 			bms.write(myCLDMessage.getLine().getBytes());
-			byte bytes[] = bms.pull();
-			if( bytes == null){
-				myCLDMessage.print_normal("<NOTHING>");
-			}
-			else{
-				myCLDMessage.print_normal(bytes.toString());
+		}
+	}
+	
+	public class readThread extends Thread{
+		public readThread(){
+			
+		}
+		
+		public void run(){
+			while (true){
+				byte bytes[] = bms.pull();
+				if( bytes == null){
+					myCLDMessage.print_normal("<NOTHING>");
+					try {
+						this.wait(100);
+					} catch (InterruptedException e) {
+						myCLDMessage.print_debug("Could not wait");
+						e.printStackTrace();
+					}
+				}
+				else{
+					myCLDMessage.print_normal(bytes.toString());
+				}
 			}
 		}
+		
 	}
 	
 	//////////////////////////////////////////////////////////
