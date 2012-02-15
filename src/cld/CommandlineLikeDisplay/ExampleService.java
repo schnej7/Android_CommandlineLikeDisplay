@@ -56,21 +56,21 @@ public class ExampleService {
 		public readThread(){
 			
 		}
-		
 		public void run(){
 			while (true){
 				byte bytes[] = bms.pull();
 				if( bytes == null){
 					myCLDMessage.print_normal("<NOTHING>");
 					try {
-						this.wait(100);
+						readThread.sleep(1000);
 					} catch (InterruptedException e) {
 						myCLDMessage.print_debug("Could not wait");
 						e.printStackTrace();
 					}
 				}
 				else{
-					myCLDMessage.print_normal(bytes.toString());
+					String messageString = new String(bytes);
+					myCLDMessage.print_normal(messageString);
 				}
 			}
 		}
