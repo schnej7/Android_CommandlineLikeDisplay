@@ -1,9 +1,11 @@
 package cld.CommandlineLikeDisplay;
 
+import android.util.Log;
 import blue.mesh.BlueMeshService;
 
 public class ExampleService {
 	
+	private static final String TAG = "ExampleService";
 	private CLDMessage myCLDMessage;
 	private BlueMeshService bms;
 	
@@ -41,14 +43,28 @@ public class ExampleService {
 	
 	public void start(){
 		myCLDMessage.print_normal("one");
-		bms = new BlueMeshService();
+		try{
+			bms = new BlueMeshService();
+		}
+		catch(NullPointerException e){
+			Log.e(TAG, "BlueMeshService Constructor failed");
+			myCLDMessage.print_normal("Bluetooth not enableded");
+			return;
+		}
 		myCLDMessage.print_normal("two");
 		bms.launch();
 		myCLDMessage.print_normal("three");
 		readThread reader = new readThread();
 		reader.start();
 		while( true ){
-			bms.write(myCLDMessage.getLine().getBytes());
+			String input = myCLDMessage.getLine();
+			if( input.equals("quit") ){
+				Log.e(TAG, "quit");
+				bms.disconnect();
+				reader.interrupt();
+				return;
+			}
+			bms.write(input.getBytes());
 		}
 	}
 	
@@ -58,6 +74,10 @@ public class ExampleService {
 		}
 		public void run(){
 			while (true){
+				if(this.isInterrupted()){
+					Log.d(TAG, "readThread interrupted");
+					return;
+				}
 				byte bytes[] = bms.pull();
 				if( bytes == null){
 					myCLDMessage.print_normal("<NOTHING>");
@@ -66,6 +86,7 @@ public class ExampleService {
 					} catch (InterruptedException e) {
 						myCLDMessage.print_debug("Could not wait");
 						e.printStackTrace();
+						return;
 					}
 				}
 				else{
