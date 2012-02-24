@@ -8,6 +8,7 @@ public class ExampleService {
 	private static final String TAG = "ExampleService";
 	private CLDMessage myCLDMessage;
 	private BlueMeshService bms;
+	private boolean stop = false;
 	
 	//example service constructor
 	public ExampleService( CLDMessage a_CLDMessage ){
@@ -40,6 +41,9 @@ public class ExampleService {
 		}
 	}
 	*/
+	public void stop(){
+		stop = true;
+	}
 	
 	public void start(){
 		myCLDMessage.print_normal("one");
@@ -56,7 +60,7 @@ public class ExampleService {
 		myCLDMessage.print_normal("three");
 		readThread reader = new readThread();
 		reader.start();
-		while( true ){
+		while( !stop ){
 			String input = myCLDMessage.getLine();
 			if( input.equals("quit") ){
 				Log.e(TAG, "quit");
@@ -74,7 +78,7 @@ public class ExampleService {
 		}
 		public void run(){
 			while (true){
-				if(this.isInterrupted()){
+				if(stop){
 					Log.d(TAG, "readThread interrupted");
 					return;
 				}
