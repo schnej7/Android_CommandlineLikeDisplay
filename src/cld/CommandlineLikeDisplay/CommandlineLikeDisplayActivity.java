@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,6 +23,31 @@ public class CommandlineLikeDisplayActivity extends Activity {
         private EditText txtInput;
         private CLDMessage myCLDMessage;
         private backendThread myBackendThread;
+        
+        
+        //MENU
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.main_menu, menu);
+            return true;
+        }
+        
+        //Menu Click Event
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            // Handle item selection
+            switch (item.getItemId()) {
+                case R.id.quit:
+                	myCLDMessage.print_normal("quit");
+                    this.myBackendThread.stopService();
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
+        }
+        
+        
        @Override 
         public void onSaveInstanceState(Bundle savedInstanceState){
         	savedInstanceState.putStringArrayList("ConsoleText", consoleText);
@@ -145,6 +173,8 @@ public class CommandlineLikeDisplayActivity extends Activity {
 	    
 	    private class backendThread extends Thread{
 	    
+	    	private ExampleService myService;
+	    	
 	    	public void run(){
 	    		///////////////////////////////////////////////
 	    		//TODO
@@ -154,7 +184,7 @@ public class CommandlineLikeDisplayActivity extends Activity {
 		    	//that in your class you can create a CLDMessage object
 		    	//used for sending data to the UI
 	    		///////////////////////////////////////////////
-	    		 ExampleService myService = new ExampleService(myCLDMessage);
+	    		myService = new ExampleService(myCLDMessage);
         		///////////////////////////////////////////////
         		//TODO
         		//
@@ -163,5 +193,10 @@ public class CommandlineLikeDisplayActivity extends Activity {
         		///////////////////////////////////////////////
                 myService.start();
 	    	}
+	    	
+	    	public void stopService(){
+	    		myService.stop();
+	    	}
+	    	
 	    }
 	}
