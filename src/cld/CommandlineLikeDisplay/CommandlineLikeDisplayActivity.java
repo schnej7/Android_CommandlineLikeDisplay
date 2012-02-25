@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import java.util.ArrayList;
 
+
 public class CommandlineLikeDisplayActivity extends Activity {
 	
 		private ArrayAdapter <String> mMessageArray;

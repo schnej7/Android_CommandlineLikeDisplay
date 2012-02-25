@@ -37,12 +37,15 @@ public class ExampleService {
 		public void run(){
 			myCLDMessage.print_normal("What is your name?");
 			String in = myCLDMessage.getLine();
-			myCLDMessage.print_normal("Your name is " + in);
+			myCLDMessage.print_normal("Your name is " + in); //what?!
+		    // chica chica chica (slim shady!)
 		}
 	}
 	*/
 	public void stop(){
-		stop = true;
+		this.stop = true;
+		myCLDMessage.notifyGetLine();
+		Log.d(TAG, "Stopping service");
 	}
 	
 	public void start(){
@@ -52,7 +55,7 @@ public class ExampleService {
 		}
 		catch(NullPointerException e){
 			Log.e(TAG, "BlueMeshService Constructor failed");
-			myCLDMessage.print_normal("Bluetooth not enableded");
+			myCLDMessage.print_normal("Bluetooth not enabled");
 			return;
 		}
 		myCLDMessage.print_normal("two");
@@ -60,16 +63,22 @@ public class ExampleService {
 		myCLDMessage.print_normal("three");
 		readThread reader = new readThread();
 		reader.start();
-		while( !stop ){
-			String input = myCLDMessage.getLine();
-			if( input.equals("quit") ){
-				Log.e(TAG, "quit");
-				bms.disconnect();
-				reader.interrupt();
-				return;
+		while( true ){
+			
+			if (this.stop)
+			{
+				Log.d(TAG, "2 Stopping service");
+				break;
 			}
+				
+			String input = myCLDMessage.getLine();
 			bms.write(input.getBytes());
 		}
+		Log.d(TAG, "3 Stopping service");
+		Log.d(TAG, "quit");
+		bms.disconnect();
+		reader.interrupt();
+		return;
 	}
 	
 	public class readThread extends Thread{
