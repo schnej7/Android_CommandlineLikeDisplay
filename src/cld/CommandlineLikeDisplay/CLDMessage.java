@@ -4,9 +4,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import android.os.Handler;
+import android.util.Log;
 
 public class CLDMessage {
 	
+	private static final String TAG = "CLDMessage";
 	private static Handler myHandler;
 	private static Queue <String> input_queue;
 	
@@ -23,6 +25,13 @@ public class CLDMessage {
 	//Get a line of text from the input
 	public synchronized void getLineFromInput(String input){
 		input_queue.add(input);
+		this.notifyAll();
+	}
+	
+	//GetLine is a blocking call, we notfiy so it will wake up
+	//from sleep
+	public synchronized void notifyGetLine()
+	{
 		this.notifyAll();
 	}
 	
