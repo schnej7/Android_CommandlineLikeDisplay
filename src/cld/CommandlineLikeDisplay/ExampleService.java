@@ -44,7 +44,7 @@ public class ExampleService {
 	*/
 	public void stop(){
 		this.stop = true;
-		myCLDMessage.notifyGetLine();
+		myCLDMessage.getLineFromInput("done");
 		Log.d(TAG, "Stopping service");
 	}
 	
@@ -72,7 +72,16 @@ public class ExampleService {
 			}
 				
 			String input = myCLDMessage.getLine();
-			bms.write(input.getBytes());
+			if( input == null ) break;
+			
+			if( input.equals("devices") ){
+				int devices = bms.getNumberOfDevicesOnNetwork();
+				myCLDMessage.print_normal("Devices on network = " + devices);
+			}
+			
+			myCLDMessage.print_normal("ME: " + input);
+			String message = bms.getMyDeviceName() + ": " + input;
+			bms.write(message.getBytes());
 		}
 		Log.d(TAG, "3 Stopping service");
 		Log.d(TAG, "quit");
