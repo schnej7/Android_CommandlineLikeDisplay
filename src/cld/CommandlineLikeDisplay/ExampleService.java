@@ -102,7 +102,6 @@ public class ExampleService {
 				}
 				byte bytes[] = bms.pull();
 				if( bytes == null){
-					myCLDMessage.print_normal("<NOTHING>");
 					try {
 						readThread.sleep(1000);
 					} catch (InterruptedException e) {
